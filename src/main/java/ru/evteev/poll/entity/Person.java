@@ -20,20 +20,16 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "persons")
+public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     int id;
 
     @Email
     @Column(name = "email")
     String email;
-
-    @Column(name = "password")
-    String password;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id")

@@ -6,10 +6,10 @@ import ru.evteev.poll.entity.Poll;
 import java.util.List;
 
 @Data
-public class UserDTO {
+public class PersonDTO {
 
     int id;
     String email;
-    String password;
+//    String password;
     List<Poll> pollList;
 }

@@ -2,8 +2,8 @@ package ru.evteev.poll.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.evteev.poll.repository.QuestionRepository;
 import ru.evteev.poll.entity.Question;
+import ru.evteev.poll.repository.QuestionRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;

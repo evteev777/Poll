@@ -25,8 +25,8 @@ public class Answer {
     int id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    User user;
+    @JoinColumn(name = "person_id")
+    Person person;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "poll_id")
