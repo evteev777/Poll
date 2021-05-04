@@ -12,5 +12,6 @@ public interface PersonMapper {
     PersonMapper INSTANCE = Mappers.getMapper(PersonMapper.class);
 
     @Mapping(target = "email", source = "user.username")
+    @Mapping(target = "answers", ignore = true)
     PersonDTO toDTO(Person person);
 }

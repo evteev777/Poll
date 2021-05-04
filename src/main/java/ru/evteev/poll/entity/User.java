@@ -33,5 +33,5 @@ public class User {
     @JoinTable(name = "users_authorities",
             joinColumns = @JoinColumn(name = "user_username"),
             inverseJoinColumns = @JoinColumn(name = "authority_username"))
-    List<Authorities> authorityList;
+    List<Role> authorityList;
 }

@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "authorities")
-public class Authorities {
+public class Role {
 
     @Id
     @Column(name = "username", nullable = false)

@@ -9,6 +9,6 @@ public class DefaultController {
     @GetMapping("/")
     public String index(){
         return "Welcome to our Poll service</br></br>\n" +
-                "<a href=\"http://localhost:8080/poll/login\">Login</a>";
+                "<a href=\"http://localhost:8080/poll/api/polls\">Login</a>";
     }
 }
