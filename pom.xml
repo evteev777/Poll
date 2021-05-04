@@ -32,12 +32,6 @@
             <artifactId>spring-webmvc</artifactId>
             <version>5.2.13.RELEASE</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>5.2.13.RELEASE</version>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -49,6 +43,12 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
             <version>5.4.6</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>5.2.13.RELEASE</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
         <dependency>
@@ -119,12 +119,6 @@
             <version>1.18.20</version>
             <scope>provided</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-mapstruct-binding -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok-mapstruct-binding</artifactId>
-            <version>0.2.0</version>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct -->
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -137,31 +131,17 @@
             <artifactId>mapstruct-processor</artifactId>
             <version>1.4.2.Final</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-mapstruct-binding -->
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.14.1</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.14.1</version>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok-mapstruct-binding</artifactId>
+            <version>0.2.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>2.14.1</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>1.7.30</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -230,46 +210,6 @@
 <!--                        <password>password</password>-->
 <!--                    </configuration>-->
                 </plugin>
-
-<!--                <plugin>-->
-<!--                    <groupId>com.googlecode.flyway</groupId>-->
-<!--                    <artifactId>flyway-maven-plugin</artifactId>-->
-<!--                    <version>2.3.1</version>-->
-<!--                    <configuration>-->
-<!--                        <driver>com.mysql.cj.jdbc.Driver</driver>-->
-<!--                        <url>jdbc:mysql://localhost:3306/poll?allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimeZone=UTC&amp;autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;connectionCollation=utf8_general_ci&amp;characterSetResults=UTF-8</url>-->
-<!--                        <locations>filesystem:src/main/resources/db/migration/mysql</locations>-->
-<!--                        <user>root</user>-->
-<!--                        <password>password</password>-->
-<!--                    </configuration>-->
-<!--                </plugin>-->
-
-<!--                <plugin>-->
-<!--                    <groupId>org.apache.maven.plugins</groupId>-->
-<!--                    <artifactId>maven-compiler-plugin</artifactId>-->
-<!--                    <version>3.8.1</version>-->
-<!--                    <configuration>-->
-<!--                        <source>1.8</source> &lt;!&ndash; depending on your project &ndash;&gt;-->
-<!--                        <target>1.8</target> &lt;!&ndash; depending on your project &ndash;&gt;-->
-<!--                        <annotationProcessorPaths>-->
-<!--                            <path>-->
-<!--                                <groupId>org.projectlombok</groupId>-->
-<!--                                <artifactId>lombok</artifactId>-->
-<!--                                <version>1.18.20</version>-->
-<!--                            </path>-->
-<!--                            <path>-->
-<!--                                <groupId>org.mapstruct</groupId>-->
-<!--                                <artifactId>mapstruct-processor</artifactId>-->
-<!--                                <version>1.4.2.Final</version>-->
-<!--                            </path>-->
-<!--                        </annotationProcessorPaths>-->
-<!--                        <compilerArgs>-->
-<!--                            <arg>-->
-<!--                                -Amapstruct.defaultComponentModel=spring-->
-<!--                            </arg>-->
-<!--                        </compilerArgs>-->
-<!--                    </configuration>-->
-<!--                </plugin>-->
             </plugins>
         </pluginManagement>
     </build>
