@@ -3,6 +3,8 @@ package ru.evteev.poll.configuration;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import lombok.Data;
 import org.flywaydb.core.Flyway;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -105,5 +107,10 @@ public class Config {
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
         return new CustomAccessDeniedHandler();
+    }
+
+    @Bean
+    public Logger logger() {
+        return LoggerFactory.getLogger("INFO");
     }
 }
