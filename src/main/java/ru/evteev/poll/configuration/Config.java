@@ -33,16 +33,16 @@ public class Config {
 
     private final Environment env;
 
-    private static final String JDBC_DRIVER = "jdbc.driverClass";
-    private static final String JDBC_URL = "jdbc.url";
-    private static final String JDBC_USER = "jdbc.user";
-    private static final String JDBC_PASSWORD = "jdbc.password";
-    private static final String HIBERNATE_DIALECT = "hibernate.dialect";
-    private static final String HIBERNATE_HBM2DDL_AUTO = "hibernate.hbm2ddl.auto";
-    private static final String HIBERNATE_SHOW_SQL = "hibernate.show_sql";
-    private static final String HIBERNATE_CHAR_SET = "hibernate.charSet";
-    private static final String HIBERNATE_CHARACTER_ENCODING = "hibernate.characterEncoding";
-    private static final String HIBERNATE_USE_UNICODE = "hibernate.useUnicode";
+    private static final String JDBC_DRIVER = "spring.datasource.driver-class-name";
+    private static final String JDBC_URL = "spring.datasource.url";
+    private static final String JDBC_USER = "spring.datasource.username";
+    private static final String JDBC_PASSWORD = "spring.datasource.password";
+    private static final String HIBERNATE_HBM2DDL_AUTO = "spring.jpa.hibernate.ddl-auto";
+    private static final String HIBERNATE_SHOW_SQL = "spring.jpa.show-sql";
+    private static final String HIBERNATE_DIALECT = "spring.jpa.properties.hibernate.dialect";
+    private static final String HIBERNATE_CHAR_SET = "spring.jpa.properties.hibernate.charSet";
+    private static final String HIBERNATE_CHARACTER_ENCODING = "spring.jpa.properties.hibernate.characterEncoding";
+    private static final String HIBERNATE_USE_UNICODE = "spring.jpa.properties.hibernate.useUnicode";
 
     @Bean
     public Flyway flyway() {
