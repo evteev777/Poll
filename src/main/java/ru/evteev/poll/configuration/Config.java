@@ -12,8 +12,10 @@ import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import ru.evteev.poll.exception.CustomAccessDeniedHandler;
 
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
@@ -98,5 +100,10 @@ public class Config {
     @Bean
     public PersistenceExceptionTranslationPostProcessor exceptionTranslator() {
         return new PersistenceExceptionTranslationPostProcessor();
+    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new CustomAccessDeniedHandler();
     }
 }
