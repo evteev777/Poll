@@ -1,6 +1,8 @@
 package ru.evteev.poll.repository;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -9,18 +11,20 @@ import ru.evteev.poll.entity.Poll;
 
 import java.util.List;
 
-@AllArgsConstructor
 @Repository
+@AllArgsConstructor
+@Getter
+@Setter
 public class PollRepositoryImpl implements PollRepository {
 
     private final SessionFactory sessionFactory;
 
     @Override
-
     public List<Poll> getAllPolls() {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from Poll order by id", Poll.class)
-                .getResultList();
+        List<Poll> pollList = session.createQuery("from Poll order by id", Poll.class).getResultList();
+        pollList.get(0);
+        return pollList;
     }
 
     @Override

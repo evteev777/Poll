@@ -4,8 +4,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import ru.evteev.poll.enums.QuestionType;
 
 import javax.persistence.CascadeType;
@@ -17,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.List;
@@ -35,13 +34,15 @@ public class Question {
     @NotBlank
     QuestionType questionType;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     @Size(min = 5, max = 255, message = "Length must be 5-255 symbols")
     @NotBlank
     String name;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pool_id")
+    Poll poll;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "question")
     List<AnswerVariant> answerVariantList;
 }

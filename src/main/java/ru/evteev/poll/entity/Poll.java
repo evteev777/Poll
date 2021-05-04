@@ -14,11 +14,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDate;
@@ -35,12 +33,15 @@ public class Poll {
     @Column(name = "id")
     Integer id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     @Size(min = 5, max = 255, message = "Length must be 5-255 symbols")
     @NotBlank
     String name;
 
-    @Column(name = "start_date")
+    @Column(name = "description")
+    String description;
+
+    @Column(name = "start_date", nullable = false)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
@@ -54,10 +55,6 @@ public class Poll {
     @FutureOrPresent
     LocalDate endDate;
 
-    @Column(name = "description")
-    String description;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "poll")
     List<Question> questionList;
 }

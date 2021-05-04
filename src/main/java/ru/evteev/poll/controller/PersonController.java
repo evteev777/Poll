@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.evteev.poll.dto.api.respomce.PersonDTO;
+import ru.evteev.poll.dto.mapper.PersonMapper;
 import ru.evteev.poll.entity.Person;
 import ru.evteev.poll.exception.FieldValidationException;
 import ru.evteev.poll.exception.NoSuchEntityException;
-import ru.evteev.poll.mapper.PersonMapper;
 import ru.evteev.poll.service.PersonService;
 
 import java.util.List;

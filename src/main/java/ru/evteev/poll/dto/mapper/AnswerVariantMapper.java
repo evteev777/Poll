@@ -1,4 +1,4 @@
-package ru.evteev.poll.mapper;
+package ru.evteev.poll.dto.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

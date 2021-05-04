@@ -19,8 +19,9 @@ public class PersonRepositoryImpl implements PersonRepository {
 
     public List<Person> getAllPersons() {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from Person order by id", Person.class)
+        List<Person> personList = session.createQuery("from Person order by id", Person.class)
                 .getResultList();
+        return personList;
     }
 
     @Override

@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/polls/**").hasAnyRole(ROLE_PERSON, ROLE_ADMIN)
                 .antMatchers("/**").hasRole(ROLE_ADMIN)
                 .and().formLogin()
-                .defaultSuccessUrl("/api/polls", true)
+                .defaultSuccessUrl("/login", true)
                 .permitAll()
                 .and().logout()
                 .logoutUrl("/logout")
