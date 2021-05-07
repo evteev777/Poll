@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication().dataSource(dataSource);
     }
 
-    //TODO Enable security after test
+    //TODO Enable security after postman test
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         boolean securityEnabled = Boolean.parseBoolean(env.getProperty("poll.security.enabled"));

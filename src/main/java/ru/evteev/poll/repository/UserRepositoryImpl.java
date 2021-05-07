@@ -19,9 +19,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     public List<User> getAllUsers() {
         Session session = sessionFactory.getCurrentSession();
-        List<User> userList = session.createQuery("from User order by id", User.class)
+        return session.createQuery("from User order by id", User.class)
                 .getResultList();
-        return userList;
     }
 
     @Override

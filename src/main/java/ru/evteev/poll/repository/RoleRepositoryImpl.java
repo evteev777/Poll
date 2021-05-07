@@ -19,15 +19,14 @@ public class RoleRepositoryImpl implements RoleRepository {
 
     public List<Role> getAllRoles() {
         Session session = sessionFactory.getCurrentSession();
-        List<Role> RoleList = session.createQuery("from Role order by id", Role.class)
+        return session.createQuery("from Role order by id", Role.class)
                 .getResultList();
-        return RoleList;
     }
 
     @Override
-    public void createOrUpdateRole(Role Role) {
+    public void createOrUpdateRole(Role role) {
         Session session = sessionFactory.getCurrentSession();
-        session.saveOrUpdate(Role);
+        session.saveOrUpdate(role);
     }
 
     @Override

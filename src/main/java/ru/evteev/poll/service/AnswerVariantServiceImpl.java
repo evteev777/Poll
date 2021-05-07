@@ -16,6 +16,12 @@ public class AnswerVariantServiceImpl implements AnswerVariantService {
 
     @Override
     @Transactional
+    public List<AnswerVariant> getQuestionAnswerVariants(int pollId, int questionId) {
+        return answerVariantRepository.getQuestionAnswerVariants(pollId, questionId);
+    }
+
+    @Override
+    @Transactional
     public List<AnswerVariant> getAllAnswerVariants() {
         return answerVariantRepository.getAllAnswerVariants();
     }

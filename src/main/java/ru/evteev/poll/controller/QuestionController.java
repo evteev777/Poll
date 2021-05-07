@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.evteev.poll.dto.api.respomce.QuestionDTO;
 import ru.evteev.poll.dto.mapper.QuestionMapper;
+import ru.evteev.poll.entity.Poll;
 import ru.evteev.poll.entity.Question;
 import ru.evteev.poll.exception.FieldValidationException;
 import ru.evteev.poll.exception.NoSuchEntityException;
+import ru.evteev.poll.service.PollService;
 import ru.evteev.poll.service.QuestionService;
 
 import java.util.List;
@@ -26,13 +28,25 @@ import java.util.stream.Collectors;
 @RequestMapping("/api")
 public class QuestionController {
 
+    private static final String NO_SUCH_POLL = "No such poll with ID=%s in database";
     private static final String NO_SUCH_QUESTION = "No such question with ID=%s in database";
     private static final String DELETED = "Question with ID=%s is deleted";
 
+    private final PollService pollService;
     private final QuestionService questionService;
 
+    @GetMapping("/polls/{pollId}/questions")
+    public List<QuestionDTO> getPollQuestions(@PathVariable int pollId) {
+        throwExceptionIfPollEmpty(pollId);
+        return questionService.getPollQuestions(pollId).stream()
+                .map(QuestionMapper.INSTANCE::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    // Standard CRUD methods:
+
     @GetMapping("/questions")
-    public List<QuestionDTO> getQuestionList() {
+    public List<QuestionDTO> getAllQuestions() {
         return questionService.getAllQuestions().stream()
                 .map(QuestionMapper.INSTANCE::toDTO)
                 .collect(Collectors.toList());
@@ -40,7 +54,7 @@ public class QuestionController {
 
     @GetMapping("/questions/{id}")
     public QuestionDTO getQuestion(@PathVariable int id) {
-        throwExceptionIfEmpty(id);
+        throwExceptionIfQuestionEmpty(id);
         Question question = questionService.readQuestion(id);
         return QuestionMapper.INSTANCE.toDTO(question);
     }
@@ -55,7 +69,7 @@ public class QuestionController {
 
     @PutMapping("/questions")
     public QuestionDTO updateQuestion(@Valid @RequestBody Question question, BindingResult br) {
-        throwExceptionIfEmpty(question.getId());
+        throwExceptionIfQuestionEmpty(question.getId());
         throwExceptionIfValidationFails(br);
         questionService.createOrUpdateQuestion(question);
         return QuestionMapper.INSTANCE.toDTO(question);
@@ -63,12 +77,20 @@ public class QuestionController {
 
     @DeleteMapping("/questions/{id}")
     public String deleteQuestion(@PathVariable int id) {
-        throwExceptionIfEmpty(id);
+        throwExceptionIfQuestionEmpty(id);
         questionService.deleteQuestion(id);
         return String.format(DELETED, id);
     }
 
-    private void throwExceptionIfEmpty(@PathVariable int id) {
+    private void throwExceptionIfPollEmpty(int pollId) {
+        Poll poll = pollService.readPoll(pollId);
+        if (poll == null) {
+            throw new NoSuchEntityException(
+                    String.format(NO_SUCH_POLL, pollId));
+        }
+    }
+
+    private void throwExceptionIfQuestionEmpty(int id) {
         Question question = questionService.readQuestion(id);
         if (question == null) {
             throw new NoSuchEntityException(

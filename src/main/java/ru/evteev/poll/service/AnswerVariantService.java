@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface AnswerVariantService {
 
+    List<AnswerVariant> getQuestionAnswerVariants(int pollId, int questionId);
+
     List<AnswerVariant> getAllAnswerVariants();
 
     void createOrUpdateAnswerVariant(AnswerVariant answerVariant);

@@ -16,6 +16,12 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     @Transactional
+    public List<Question> getPollQuestions(int pollId) {
+        return questionRepository.getPollQuestions(pollId);
+    }
+
+    @Override
+    @Transactional
     public List<Question> getAllQuestions() {
         return questionRepository.getAllQuestions();
     }

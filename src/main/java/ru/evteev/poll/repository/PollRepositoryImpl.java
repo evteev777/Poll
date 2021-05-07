@@ -23,7 +23,7 @@ public class PollRepositoryImpl implements PollRepository {
     public List<Poll> getAllPolls() {
         Session session = sessionFactory.getCurrentSession();
         List<Poll> pollList = session.createQuery("from Poll order by id", Poll.class).getResultList();
-        pollList.get(0);
+        pollList.get(0); // EAGER get polls
         return pollList;
     }
 

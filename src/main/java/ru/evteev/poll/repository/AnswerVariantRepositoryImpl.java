@@ -16,7 +16,17 @@ public class AnswerVariantRepositoryImpl implements AnswerVariantRepository {
     private final SessionFactory sessionFactory;
 
     @Override
+    public List<AnswerVariant> getQuestionAnswerVariants(int pollId, int questionId) {
+        Session session = sessionFactory.getCurrentSession();
+        Query<AnswerVariant> query = session.createQuery("from AnswerVariant a " +
+                "where a.question.poll.id = :pollId and a.question.id = :questionId " +
+                "order by id", AnswerVariant.class);
+        query.setParameter("pollId", pollId);
+        query.setParameter("questionId", questionId);
+        return query.getResultList();
+    }
 
+    @Override
     public List<AnswerVariant> getAllAnswerVariants() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("from AnswerVariant order by id",

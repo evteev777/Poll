@@ -14,9 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.evteev.poll.dto.api.respomce.AnswerVariantDTO;
 import ru.evteev.poll.dto.mapper.AnswerVariantMapper;
 import ru.evteev.poll.entity.AnswerVariant;
+import ru.evteev.poll.entity.Poll;
+import ru.evteev.poll.entity.Question;
 import ru.evteev.poll.exception.FieldValidationException;
 import ru.evteev.poll.exception.NoSuchEntityException;
 import ru.evteev.poll.service.AnswerVariantService;
+import ru.evteev.poll.service.PollService;
+import ru.evteev.poll.service.QuestionService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,13 +30,28 @@ import java.util.stream.Collectors;
 @RequestMapping("/api")
 public class AnswerVariantController {
 
+    private static final String NO_SUCH_POLL = "No such poll with ID=%s in database";
+    private static final String NO_SUCH_QUESTION = "No such question with ID=%s in database";
     private static final String NO_SUCH_VARIANT = "No such answer variant with ID=%s in database";
     private static final String DELETED = "Answer variant with ID=%s is deleted";
 
+    private final PollService pollService;
+    private final QuestionService questionService;
     private final AnswerVariantService answerVariantService;
 
+    @GetMapping("/polls/{pollId}/questions/{questionId}/answer_variants")
+    public List<AnswerVariantDTO> getPollQuestions(@PathVariable int pollId, @PathVariable int questionId) {
+        throwExceptionIfPollEmpty(pollId);
+        throwExceptionIfQuestionEmpty(questionId);
+        return answerVariantService.getQuestionAnswerVariants(pollId, questionId).stream()
+                .map(AnswerVariantMapper.INSTANCE::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    // Standard CRUD methods:
+
     @GetMapping("/answer_variants")
-    public List<AnswerVariantDTO> getAnswerVariantList() {
+    public List<AnswerVariantDTO> getAnswerVariants() {
         return answerVariantService.getAllAnswerVariants().stream()
                 .map(AnswerVariantMapper.INSTANCE::toDTO)
                 .collect(Collectors.toList());
@@ -68,6 +87,23 @@ public class AnswerVariantController {
         throwExceptionIfEmpty(id);
         answerVariantService.deleteAnswerVariant(id);
         return String.format(DELETED, id);
+    }
+
+
+    private void throwExceptionIfPollEmpty(int pollId) {
+        Poll poll = pollService.readPoll(pollId);
+        if (poll == null) {
+            throw new NoSuchEntityException(
+                    String.format(NO_SUCH_POLL, pollId));
+        }
+    }
+
+    private void throwExceptionIfQuestionEmpty(int id) {
+        Question question = questionService.readQuestion(id);
+        if (question == null) {
+            throw new NoSuchEntityException(
+                    String.format(NO_SUCH_QUESTION, id));
+        }
     }
 
     private void throwExceptionIfEmpty(@PathVariable int id) {
