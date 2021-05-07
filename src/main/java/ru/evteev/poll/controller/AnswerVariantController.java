@@ -60,7 +60,7 @@ public class AnswerVariantController {
     @GetMapping("/answer_variants/{id}")
     public AnswerVariantDTO getAnswerVariant(@PathVariable int id) {
         throwExceptionIfEmpty(id);
-        AnswerVariant answerVariant = answerVariantService.readAnswerVariant(id);
+        AnswerVariant answerVariant = answerVariantService.getAnswerVariant(id);
         return AnswerVariantMapper.INSTANCE.toDTO(answerVariant);
     }
 
@@ -91,7 +91,7 @@ public class AnswerVariantController {
 
 
     private void throwExceptionIfPollEmpty(int pollId) {
-        Poll poll = pollService.readPoll(pollId);
+        Poll poll = pollService.getPoll(pollId);
         if (poll == null) {
             throw new NoSuchEntityException(
                     String.format(NO_SUCH_POLL, pollId));
@@ -99,7 +99,7 @@ public class AnswerVariantController {
     }
 
     private void throwExceptionIfQuestionEmpty(int id) {
-        Question question = questionService.readQuestion(id);
+        Question question = questionService.getQuestion(id);
         if (question == null) {
             throw new NoSuchEntityException(
                     String.format(NO_SUCH_QUESTION, id));
@@ -107,7 +107,7 @@ public class AnswerVariantController {
     }
 
     private void throwExceptionIfEmpty(@PathVariable int id) {
-        AnswerVariant answerVariant = answerVariantService.readAnswerVariant(id);
+        AnswerVariant answerVariant = answerVariantService.getAnswerVariant(id);
         if (answerVariant == null) {
             throw new NoSuchEntityException(
                     String.format(NO_SUCH_VARIANT, id));

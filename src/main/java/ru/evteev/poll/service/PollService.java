@@ -10,7 +10,7 @@ public interface PollService {
 
     Poll createOrUpdatePoll(Poll poll);
 
-    Poll readPoll(int id);
+    Poll getPoll(int id);
 
     void deletePoll(int id);
 }

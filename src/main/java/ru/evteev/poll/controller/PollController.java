@@ -41,7 +41,7 @@ public class PollController {
     @GetMapping("/polls/{id}")
     public PollDTO getPoll(@PathVariable int id) {
         throwExceptionIfEmpty(id);
-        Poll poll = pollService.readPoll(id);
+        Poll poll = pollService.getPoll(id);
         return PollMapper.INSTANCE.toDTO(poll);
     }
 
@@ -69,7 +69,7 @@ public class PollController {
     }
 
     private void throwExceptionIfEmpty(@PathVariable int id) {
-        Poll poll = pollService.readPoll(id);
+        Poll poll = pollService.getPoll(id);
         if (poll == null) {
             throw new NoSuchEntityException(
                     String.format(NO_SUCH_POLL, id));

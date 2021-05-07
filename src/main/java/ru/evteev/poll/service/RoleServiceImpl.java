@@ -28,7 +28,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @Transactional
-    public Role readRole(int id) {
+    public Role getRole(int id) {
         return RoleRepository.getRole(id);
     }
 

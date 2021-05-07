@@ -29,7 +29,7 @@ public class PollServiceImpl implements PollService {
 
     @Override
     @Transactional
-    public Poll readPoll(int id) {
+    public Poll getPoll(int id) {
         return pollRepository.getPoll(id);
     }
 

@@ -55,7 +55,7 @@ public class QuestionController {
     @GetMapping("/questions/{id}")
     public QuestionDTO getQuestion(@PathVariable int id) {
         throwExceptionIfQuestionEmpty(id);
-        Question question = questionService.readQuestion(id);
+        Question question = questionService.getQuestion(id);
         return QuestionMapper.INSTANCE.toDTO(question);
     }
 
@@ -83,7 +83,7 @@ public class QuestionController {
     }
 
     private void throwExceptionIfPollEmpty(int pollId) {
-        Poll poll = pollService.readPoll(pollId);
+        Poll poll = pollService.getPoll(pollId);
         if (poll == null) {
             throw new NoSuchEntityException(
                     String.format(NO_SUCH_POLL, pollId));
@@ -91,7 +91,7 @@ public class QuestionController {
     }
 
     private void throwExceptionIfQuestionEmpty(int id) {
-        Question question = questionService.readQuestion(id);
+        Question question = questionService.getQuestion(id);
         if (question == null) {
             throw new NoSuchEntityException(
                     String.format(NO_SUCH_QUESTION, id));

@@ -34,7 +34,7 @@ public class AnswerVariantServiceImpl implements AnswerVariantService {
 
     @Override
     @Transactional
-    public AnswerVariant readAnswerVariant(int id) {
+    public AnswerVariant getAnswerVariant(int id) {
         return answerVariantRepository.getAnswerVariant(id);
     }
 

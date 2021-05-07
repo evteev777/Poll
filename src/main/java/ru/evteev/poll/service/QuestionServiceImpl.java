@@ -34,7 +34,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     @Transactional
-    public Question readQuestion(int id) {
+    public Question getQuestion(int id) {
         return questionRepository.getQuestion(id);
     }
 

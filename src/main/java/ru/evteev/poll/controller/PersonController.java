@@ -41,7 +41,7 @@ public class PersonController {
     @GetMapping("/persons/{id}")
     public PersonDTO getPerson(@PathVariable int id) {
         throwExceptionIfEmpty(id);
-        Person person = personService.readPerson(id);
+        Person person = personService.getPerson(id);
         return PersonMapper.INSTANCE.toDTO(person);
     }
 
@@ -68,7 +68,7 @@ public class PersonController {
     }
 
     private void throwExceptionIfEmpty(@PathVariable int id) {
-        Person person = personService.readPerson(id);
+        Person person = personService.getPerson(id);
         if (person == null) {
             throw new NoSuchEntityException(
                     String.format(NO_SUCH_PERSON, id));

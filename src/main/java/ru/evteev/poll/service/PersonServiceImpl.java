@@ -28,7 +28,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional
-    public Person readPerson(int id) {
+    public Person getPerson(int id) {
         return personRepository.getPerson(id);
     }
 

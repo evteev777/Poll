@@ -41,7 +41,7 @@ public class UserController {
     @GetMapping("/users/{id}")
     public UserDTO getUser(@PathVariable int id) {
         throwExceptionIfEmpty(id);
-        User user = userService.readUser(id);
+        User user = userService.getUser(id);
         return UserMapper.INSTANCE.toDTO(user);
     }
 
@@ -68,7 +68,7 @@ public class UserController {
     }
 
     private void throwExceptionIfEmpty(@PathVariable int id) {
-        User user = userService.readUser(id);
+        User user = userService.getUser(id);
         if (user == null) {
             throw new NoSuchEntityException(
                     String.format(NO_SUCH_PERSON, id));

@@ -41,7 +41,7 @@ public class RoleController {
     @GetMapping("/roles/{id}")
     public RoleDTO getRole(@PathVariable int id) {
         throwExceptionIfEmpty(id);
-        Role role = roleService.readRole(id);
+        Role role = roleService.getRole(id);
         return RoleMapper.INSTANCE.toDTO(role);
     }
 
@@ -68,7 +68,7 @@ public class RoleController {
     }
 
     private void throwExceptionIfEmpty(@PathVariable int id) {
-        Role role = roleService.readRole(id);
+        Role role = roleService.getRole(id);
         if (role == null) {
             throw new NoSuchEntityException(
                     String.format(NO_SUCH_PERSON, id));

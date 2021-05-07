@@ -12,7 +12,7 @@ public interface AnswerVariantService {
 
     void createOrUpdateAnswerVariant(AnswerVariant answerVariant);
 
-    AnswerVariant readAnswerVariant(int id);
+    AnswerVariant getAnswerVariant(int id);
 
     void deleteAnswerVariant(int id);
 }

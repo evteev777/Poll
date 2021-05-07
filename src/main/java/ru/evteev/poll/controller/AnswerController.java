@@ -41,7 +41,7 @@ public class AnswerController {
     @GetMapping("/answers/{id}")
     public AnswerDTO getAnswer(@PathVariable int id) {
         throwExceptionIfEmpty(id);
-        Answer answer = answerService.readAnswer(id);
+        Answer answer = answerService.getAnswer(id);
         return AnswerMapper.INSTANCE.toDTO(answer);
     }
 
@@ -71,7 +71,7 @@ public class AnswerController {
     }
 
     private void throwExceptionIfEmpty(@PathVariable int id) {
-        Answer answer = answerService.readAnswer(id);
+        Answer answer = answerService.getAnswer(id);
         if (answer == null) {
             throw new NoSuchEntityException(
                     String.format(NO_SUCH_VARIANT, id));

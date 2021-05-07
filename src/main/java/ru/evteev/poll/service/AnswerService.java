@@ -10,7 +10,7 @@ public interface AnswerService {
 
     void createOrUpdateAnswer(Answer answer);
 
-    Answer readAnswer(int id);
+    Answer getAnswer(int id);
 
     void deleteAnswer(int id);
 }

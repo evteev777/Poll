@@ -12,7 +12,7 @@ public interface QuestionService {
 
     void createOrUpdateQuestion(Question question);
 
-    Question readQuestion(int id);
+    Question getQuestion(int id);
 
     void deleteQuestion(int id);
 }

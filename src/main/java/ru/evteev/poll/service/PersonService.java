@@ -10,7 +10,7 @@ public interface PersonService {
 
     void createOrUpdatePerson(Person person);
 
-    Person readPerson(int id);
+    Person getPerson(int id);
 
     void deletePerson(int id);
 }

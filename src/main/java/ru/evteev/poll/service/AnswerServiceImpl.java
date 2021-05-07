@@ -28,7 +28,7 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     @Transactional
-    public Answer readAnswer(int id) {
+    public Answer getAnswer(int id) {
         return answerRepository.getAnswer(id);
     }
 
