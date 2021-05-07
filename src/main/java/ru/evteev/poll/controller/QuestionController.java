@@ -43,6 +43,14 @@ public class QuestionController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/polls/{pollId}/questions/{questionId}")
+    public QuestionDTO getPollQuestion(@PathVariable int pollId, @PathVariable int questionId) {
+        throwExceptionIfPollEmpty(pollId);
+        throwExceptionIfQuestionEmpty(questionId);
+        Question question = questionService.getPollQuestion(pollId, questionId);
+        return QuestionMapper.INSTANCE.toDTO(question);
+    }
+
     // Standard CRUD methods:
 
     @GetMapping("/questions")

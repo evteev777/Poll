@@ -40,12 +40,24 @@ public class AnswerVariantController {
     private final AnswerVariantService answerVariantService;
 
     @GetMapping("/polls/{pollId}/questions/{questionId}/answer_variants")
-    public List<AnswerVariantDTO> getPollQuestions(@PathVariable int pollId, @PathVariable int questionId) {
+    public List<AnswerVariantDTO> getQuestionAnswerVariants(
+            @PathVariable int pollId, @PathVariable int questionId) {
         throwExceptionIfPollEmpty(pollId);
         throwExceptionIfQuestionEmpty(questionId);
         return answerVariantService.getQuestionAnswerVariants(pollId, questionId).stream()
                 .map(AnswerVariantMapper.INSTANCE::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/polls/{pollId}/questions/{questionId}/answer_variants/{id}")
+    public AnswerVariantDTO getQuestionAnswerVariant(
+            @PathVariable int pollId, @PathVariable int questionId, @PathVariable int id) {
+        throwExceptionIfPollEmpty(pollId);
+        throwExceptionIfQuestionEmpty(questionId);
+        throwExceptionIfAnswerVariantEmpty(id);
+        AnswerVariant answerVariant = answerVariantService
+                .getQuestionAnswerVariant(pollId, questionId, id);
+        return AnswerVariantMapper.INSTANCE.toDTO(answerVariant);
     }
 
     // Standard CRUD methods:
@@ -59,7 +71,7 @@ public class AnswerVariantController {
 
     @GetMapping("/answer_variants/{id}")
     public AnswerVariantDTO getAnswerVariant(@PathVariable int id) {
-        throwExceptionIfEmpty(id);
+        throwExceptionIfAnswerVariantEmpty(id);
         AnswerVariant answerVariant = answerVariantService.getAnswerVariant(id);
         return AnswerVariantMapper.INSTANCE.toDTO(answerVariant);
     }
@@ -76,7 +88,7 @@ public class AnswerVariantController {
     @PutMapping("/answer_variants")
     public AnswerVariantDTO updateAnswerVariant(
             @Valid @RequestBody AnswerVariant answerVariant, BindingResult br) {
-        throwExceptionIfEmpty(answerVariant.getId());
+        throwExceptionIfAnswerVariantEmpty(answerVariant.getId());
         throwExceptionIfValidationFails(br);
         answerVariantService.createOrUpdateAnswerVariant(answerVariant);
         return AnswerVariantMapper.INSTANCE.toDTO(answerVariant);
@@ -84,7 +96,7 @@ public class AnswerVariantController {
 
     @DeleteMapping("/answer_variants/{id}")
     public String deleteAnswerVariant(@PathVariable int id) {
-        throwExceptionIfEmpty(id);
+        throwExceptionIfAnswerVariantEmpty(id);
         answerVariantService.deleteAnswerVariant(id);
         return String.format(DELETED, id);
     }
@@ -98,15 +110,15 @@ public class AnswerVariantController {
         }
     }
 
-    private void throwExceptionIfQuestionEmpty(int id) {
-        Question question = questionService.getQuestion(id);
+    private void throwExceptionIfQuestionEmpty(int questionId) {
+        Question question = questionService.getQuestion(questionId);
         if (question == null) {
             throw new NoSuchEntityException(
-                    String.format(NO_SUCH_QUESTION, id));
+                    String.format(NO_SUCH_QUESTION, questionId));
         }
     }
 
-    private void throwExceptionIfEmpty(@PathVariable int id) {
+    private void throwExceptionIfAnswerVariantEmpty(int id) {
         AnswerVariant answerVariant = answerVariantService.getAnswerVariant(id);
         if (answerVariant == null) {
             throw new NoSuchEntityException(
