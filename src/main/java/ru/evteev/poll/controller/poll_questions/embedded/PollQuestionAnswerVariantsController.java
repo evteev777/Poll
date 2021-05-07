@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -66,6 +67,19 @@ public class PollQuestionAnswerVariantsController {
         answerVariantService.createOrUpdateAnswerVariant(questionId, answerVariant);
         return AnswerVariantMapper.INSTANCE.toDTO(answerVariant);
     }
+
+    @PutMapping("/polls/{pollId}/questions/{questionId}/answer_variants")
+    public AnswerVariantDTO updateAnswerVariant(
+            @PathVariable int pollId,
+            @PathVariable int questionId,
+            @RequestBody AnswerVariant answerVariant) {
+        throwExceptionIfPollEmpty(pollId);
+        throwExceptionIfQuestionEmpty(questionId);
+        throwExceptionIfAnswerVariantEmpty(answerVariant.getId());
+        answerVariantService.createOrUpdateAnswerVariant(questionId, answerVariant);
+        return AnswerVariantMapper.INSTANCE.toDTO(answerVariant);
+    }
+
 
     private void throwExceptionIfPollEmpty(int pollId) {
         Poll poll = pollService.getPoll(pollId);
