@@ -3,6 +3,7 @@ package ru.evteev.poll.controller.poll_questions.embedded;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +30,7 @@ public class PollQuestionsController {
 
     private static final String NO_SUCH_POLL = "No such poll with ID=%s in database";
     private static final String NO_SUCH_QUESTION = "No such question with ID=%s in database";
+    private static final String DELETED = "Question with ID=%s is deleted";
 
     private final PollService pollService;
     private final QuestionService questionService;
@@ -57,13 +59,22 @@ public class PollQuestionsController {
         return QuestionMapper.INSTANCE.toDTO(question);
     }
 
-    @PutMapping("/polls/{pollId}//questions")
+    @PutMapping("/polls/{pollId}/questions")
     public QuestionDTO updateQuestion(
             @PathVariable int pollId, @RequestBody Question question) {
         throwExceptionIfPollEmpty(pollId);
         throwExceptionIfQuestionEmpty(question.getId());
         questionService.createOrUpdateQuestion(pollId, question);
         return QuestionMapper.INSTANCE.toDTO(question);
+    }
+
+    @DeleteMapping("/polls/{pollId}/questions/{questionId}")
+    public String deleteQuestion(
+            @PathVariable int pollId, @PathVariable int questionId) {
+        throwExceptionIfPollEmpty(pollId);
+        throwExceptionIfQuestionEmpty(questionId);
+        questionService.deleteQuestion(pollId, questionId);
+        return String.format(DELETED, questionId);
     }
 
     private void throwExceptionIfPollEmpty(int pollId) {

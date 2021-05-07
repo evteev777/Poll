@@ -36,6 +36,16 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
+    public void deleteQuestion(int pollId, int questionId) {
+        Session session = sessionFactory.getCurrentSession();
+        Query<Question> query = session.createQuery("delete from Question q " +
+                "where q.poll.id = :pollId and q.id = :questionId");
+        query.setParameter("pollId", pollId);
+        query.setParameter("questionId", questionId);
+        query.executeUpdate();
+    }
+
+    @Override
     public List<Question> getAllQuestions() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("from Question order by id", Question.class)

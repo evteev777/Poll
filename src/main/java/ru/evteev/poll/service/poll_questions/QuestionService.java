@@ -12,6 +12,8 @@ public interface QuestionService {
 
     void createOrUpdateQuestion(int pollId, Question question);
 
+    void deleteQuestion(int pollId, int questionId);
+
     List<Question> getAllQuestions();
 
     void createOrUpdateQuestion(Question question);

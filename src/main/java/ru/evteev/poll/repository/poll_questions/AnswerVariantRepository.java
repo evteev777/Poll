@@ -10,6 +10,8 @@ public interface AnswerVariantRepository {
 
     AnswerVariant getQuestionAnswerVariant(int pollId, int questionId, int id);
 
+    void deleteAnswerVariant(int questionId, int id);
+
     List<AnswerVariant> getAllAnswerVariants();
 
     void createOrUpdateAnswerVariant(AnswerVariant answerVariant);

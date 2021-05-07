@@ -39,6 +39,16 @@ public class AnswerVariantRepositoryImpl implements AnswerVariantRepository {
     }
 
     @Override
+    public void deleteAnswerVariant(int questionId, int id) {
+        Session session = sessionFactory.getCurrentSession();
+        Query<AnswerVariant> query = session.createQuery("delete from AnswerVariant a " +
+                "where a.question.id = :questionId and id = :id");
+        query.setParameter("questionId", questionId);
+        query.setParameter("id", id);
+        query.executeUpdate();
+    }
+
+    @Override
     public List<AnswerVariant> getAllAnswerVariants() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("from AnswerVariant order by id",

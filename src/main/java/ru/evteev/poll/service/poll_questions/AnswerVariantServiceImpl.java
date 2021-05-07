@@ -38,6 +38,12 @@ public class AnswerVariantServiceImpl implements AnswerVariantService {
 
     @Override
     @Transactional
+    public void deleteAnswerVariant(int questionId, int id) {
+        answerVariantRepository.deleteAnswerVariant(questionId, id);
+    }
+
+    @Override
+    @Transactional
     public List<AnswerVariant> getAllAnswerVariants() {
         return answerVariantRepository.getAllAnswerVariants();
     }

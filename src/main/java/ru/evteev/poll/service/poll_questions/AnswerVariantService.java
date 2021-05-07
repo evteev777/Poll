@@ -12,6 +12,8 @@ public interface AnswerVariantService {
 
     void createOrUpdateAnswerVariant(int questionId, AnswerVariant answerVariant);
 
+    void deleteAnswerVariant(int questionId, int id);
+
     List<AnswerVariant> getAllAnswerVariants();
 
     void createOrUpdateAnswerVariant(AnswerVariant answerVariant);

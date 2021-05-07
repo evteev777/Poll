@@ -10,6 +10,8 @@ public interface QuestionRepository {
 
     Question getPollQuestion(int pollId, int questionId);
 
+    void deleteQuestion(int pollId, int questionId);
+
     List<Question> getAllQuestions();
 
     void createOrUpdateQuestion(Question question);

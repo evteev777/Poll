@@ -37,6 +37,12 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     @Transactional
+    public void deleteQuestion(int pollId, int questionId) {
+        questionRepository.deleteQuestion(pollId, questionId);
+    }
+
+    @Override
+    @Transactional
     public List<Question> getAllQuestions() {
         return questionRepository.getAllQuestions();
     }
