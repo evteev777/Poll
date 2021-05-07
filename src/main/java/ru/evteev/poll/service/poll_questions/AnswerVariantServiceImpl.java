@@ -13,34 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class AnswerVariantServiceImpl implements AnswerVariantService {
 
-    private final QuestionRepository questionRepository;
     private final AnswerVariantRepository answerVariantRepository;
-
-    @Override
-    @Transactional
-    public List<AnswerVariant> getQuestionAnswerVariants(int pollId, int questionId) {
-        return answerVariantRepository.getQuestionAnswerVariants(pollId, questionId);
-    }
-
-    @Override
-    @Transactional
-    public AnswerVariant getQuestionAnswerVariant(int pollId, int questionId, int id) {
-        return answerVariantRepository
-                .getQuestionAnswerVariant(pollId, questionId, id);
-    }
-
-    @Override
-    @Transactional
-    public void createOrUpdateAnswerVariant(int questionId, AnswerVariant answerVariant) {
-        answerVariant.setQuestion(questionRepository.getQuestion(questionId));
-        answerVariantRepository.createOrUpdateAnswerVariant(answerVariant);
-    }
-
-    @Override
-    @Transactional
-    public void deleteAnswerVariant(int questionId, int id) {
-        answerVariantRepository.deleteAnswerVariant(questionId, id);
-    }
 
     @Override
     @Transactional

@@ -16,36 +16,6 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     private final SessionFactory sessionFactory;
 
     @Override
-    public List<Question> getPollQuestions(int pollId) {
-        Session session = sessionFactory.getCurrentSession();
-        Query<Question> query = session.createQuery(
-                "from Question q where q.poll.id = :pollId order by id", Question.class);
-        query.setParameter("pollId", pollId);
-        return query.getResultList();
-    }
-
-    @Override
-    public Question getPollQuestion(int pollId, int questionId) {
-        Session session = sessionFactory.getCurrentSession();
-        Query<Question> query = session.createQuery("from Question q " +
-                "where q.id = :questionId and q.poll.id = :pollId " +
-                "order by id", Question.class);
-        query.setParameter("pollId", pollId);
-        query.setParameter("questionId", questionId);
-        return query.getSingleResult();
-    }
-
-    @Override
-    public void deleteQuestion(int pollId, int questionId) {
-        Session session = sessionFactory.getCurrentSession();
-        Query<Question> query = session.createQuery("delete from Question q " +
-                "where q.poll.id = :pollId and q.id = :questionId");
-        query.setParameter("pollId", pollId);
-        query.setParameter("questionId", questionId);
-        query.executeUpdate();
-    }
-
-    @Override
     public List<Question> getAllQuestions() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("from Question order by id", Question.class)

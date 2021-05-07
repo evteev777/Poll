@@ -1,8 +1,6 @@
 package ru.evteev.poll.controller.poll_questions.embedded;
 
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +18,7 @@ import ru.evteev.poll.exception.NoSuchEntityException;
 import ru.evteev.poll.service.poll_questions.AnswerVariantService;
 import ru.evteev.poll.service.poll_questions.PollService;
 import ru.evteev.poll.service.poll_questions.QuestionService;
+import ru.evteev.poll.service.poll_questions.embedded.QuestionAnswerVariantsService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,14 +36,15 @@ public class PollQuestionAnswerVariantsController {
 
     private final PollService pollService;
     private final QuestionService questionService;
-    private final AnswerVariantService answerVariantService;
+    private final QuestionAnswerVariantsService questionAnswerVariantsService;
 
     @GetMapping("/polls/{pollId}/questions/{questionId}/answer_variants")
     public List<AnswerVariantDTO> getQuestionAnswerVariants(
             @PathVariable int pollId, @PathVariable int questionId) {
         throwExceptionIfPollEmpty(pollId);
         throwExceptionIfQuestionEmpty(questionId);
-        return answerVariantService.getQuestionAnswerVariants(pollId, questionId).stream()
+        return questionAnswerVariantsService
+                .getQuestionAnswerVariants(pollId, questionId).stream()
                 .map(AnswerVariantMapper.INSTANCE::toDTO)
                 .collect(Collectors.toList());
     }
@@ -54,8 +54,8 @@ public class PollQuestionAnswerVariantsController {
             @PathVariable int pollId, @PathVariable int questionId, @PathVariable int id) {
         throwExceptionIfPollEmpty(pollId);
         throwExceptionIfQuestionEmpty(questionId);
-        throwExceptionIfAnswerVariantEmpty(id);
-        AnswerVariant answerVariant = answerVariantService
+        throwExceptionIfAnswerVariantEmpty(pollId, questionId, id);
+        AnswerVariant answerVariant = questionAnswerVariantsService
                 .getQuestionAnswerVariant(pollId, questionId, id);
         return AnswerVariantMapper.INSTANCE.toDTO(answerVariant);
     }
@@ -67,7 +67,7 @@ public class PollQuestionAnswerVariantsController {
             @RequestBody AnswerVariant answerVariant) {
         throwExceptionIfPollEmpty(pollId);
         throwExceptionIfQuestionEmpty(questionId);
-        answerVariantService.createOrUpdateAnswerVariant(questionId, answerVariant);
+        questionAnswerVariantsService.createOrUpdateAnswerVariant(questionId, answerVariant);
         return AnswerVariantMapper.INSTANCE.toDTO(answerVariant);
     }
 
@@ -78,8 +78,8 @@ public class PollQuestionAnswerVariantsController {
             @RequestBody AnswerVariant answerVariant) {
         throwExceptionIfPollEmpty(pollId);
         throwExceptionIfQuestionEmpty(questionId);
-        throwExceptionIfAnswerVariantEmpty(answerVariant.getId());
-        answerVariantService.createOrUpdateAnswerVariant(questionId, answerVariant);
+        throwExceptionIfAnswerVariantEmpty(pollId, questionId, answerVariant.getId());
+        questionAnswerVariantsService.createOrUpdateAnswerVariant(questionId, answerVariant);
         return AnswerVariantMapper.INSTANCE.toDTO(answerVariant);
     }
 
@@ -90,8 +90,8 @@ public class PollQuestionAnswerVariantsController {
             @PathVariable int id) {
         throwExceptionIfPollEmpty(pollId);
         throwExceptionIfQuestionEmpty(questionId);
-        throwExceptionIfAnswerVariantEmpty(id);
-        answerVariantService.deleteAnswerVariant(questionId, id);
+        throwExceptionIfAnswerVariantEmpty(pollId, questionId, id);
+        questionAnswerVariantsService.deleteAnswerVariant(questionId, id);
         return String.format(DELETED, id);
     }
 
@@ -111,8 +111,9 @@ public class PollQuestionAnswerVariantsController {
         }
     }
 
-    private void throwExceptionIfAnswerVariantEmpty(int id) {
-        AnswerVariant answerVariant = answerVariantService.getAnswerVariant(id);
+    private void throwExceptionIfAnswerVariantEmpty(int pollId, int questionId, int id) {
+        AnswerVariant answerVariant = questionAnswerVariantsService
+                .getQuestionAnswerVariant(pollId, questionId, id);
         if (answerVariant == null) {
             throw new NoSuchEntityException(
                     String.format(NO_SUCH_VARIANT, id));

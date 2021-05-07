@@ -6,14 +6,6 @@ import java.util.List;
 
 public interface QuestionService {
 
-    List<Question> getPollQuestions(int pollId);
-
-    Question getPollQuestion(int pollId, int questionId);
-
-    void createOrUpdateQuestion(int pollId, Question question);
-
-    void deleteQuestion(int pollId, int questionId);
-
     List<Question> getAllQuestions();
 
     void createOrUpdateQuestion(Question question);
