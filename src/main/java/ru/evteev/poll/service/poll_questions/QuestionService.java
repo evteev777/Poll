@@ -10,6 +10,8 @@ public interface QuestionService {
 
     Question getPollQuestion(int pollId, int questionId);
 
+    void createOrUpdateQuestion(int pollId, Question question);
+
     List<Question> getAllQuestions();
 
     void createOrUpdateQuestion(Question question);

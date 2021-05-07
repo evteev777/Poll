@@ -1,8 +1,12 @@
 package ru.evteev.poll.controller.poll_questions.embedded;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.evteev.poll.dto.api.respomce.AnswerVariantDTO;
@@ -49,6 +53,17 @@ public class PollQuestionAnswerVariantsController {
         throwExceptionIfAnswerVariantEmpty(id);
         AnswerVariant answerVariant = answerVariantService
                 .getQuestionAnswerVariant(pollId, questionId, id);
+        return AnswerVariantMapper.INSTANCE.toDTO(answerVariant);
+    }
+
+    @PostMapping("/polls/{pollId}/questions/{questionId}/answer_variants")
+    public AnswerVariantDTO createQuestionAnswerVariant(
+            @PathVariable int pollId,
+            @PathVariable int questionId,
+            @RequestBody AnswerVariant answerVariant) {
+        throwExceptionIfPollEmpty(pollId);
+        throwExceptionIfQuestionEmpty(questionId);
+        answerVariantService.createOrUpdateAnswerVariant(questionId, answerVariant);
         return AnswerVariantMapper.INSTANCE.toDTO(answerVariant);
     }
 

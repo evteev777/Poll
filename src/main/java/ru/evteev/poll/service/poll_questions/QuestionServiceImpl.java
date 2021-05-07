@@ -3,6 +3,7 @@ package ru.evteev.poll.service.poll_questions;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.evteev.poll.entity.Question;
+import ru.evteev.poll.repository.poll_questions.PollRepository;
 import ru.evteev.poll.repository.poll_questions.QuestionRepository;
 
 import javax.transaction.Transactional;
@@ -12,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class QuestionServiceImpl implements QuestionService {
 
+    private final PollRepository pollRepository;
     private final QuestionRepository questionRepository;
 
     @Override
@@ -24,6 +26,13 @@ public class QuestionServiceImpl implements QuestionService {
     @Transactional
     public Question getPollQuestion(int pollId, int questionId) {
         return questionRepository.getPollQuestion(pollId, questionId);
+    }
+
+    @Override
+    @Transactional
+    public void createOrUpdateQuestion(int pollId, Question question) {
+        question.setPoll(pollRepository.getPoll(pollId));
+        questionRepository.createOrUpdateQuestion(question);
     }
 
     @Override

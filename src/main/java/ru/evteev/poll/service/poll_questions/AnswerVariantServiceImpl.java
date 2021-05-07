@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.evteev.poll.entity.AnswerVariant;
 import ru.evteev.poll.repository.poll_questions.AnswerVariantRepository;
+import ru.evteev.poll.repository.poll_questions.QuestionRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class AnswerVariantServiceImpl implements AnswerVariantService {
 
+    private final QuestionRepository questionRepository;
     private final AnswerVariantRepository answerVariantRepository;
 
     @Override
@@ -25,6 +27,13 @@ public class AnswerVariantServiceImpl implements AnswerVariantService {
     public AnswerVariant getQuestionAnswerVariant(int pollId, int questionId, int id) {
         return answerVariantRepository
                 .getQuestionAnswerVariant(pollId, questionId, id);
+    }
+
+    @Override
+    @Transactional
+    public void createOrUpdateAnswerVariant(int questionId, AnswerVariant answerVariant) {
+        answerVariant.setQuestion(questionRepository.getQuestion(questionId));
+        answerVariantRepository.createOrUpdateAnswerVariant(answerVariant);
     }
 
     @Override

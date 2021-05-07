@@ -1,14 +1,19 @@
 package ru.evteev.poll.controller.poll_questions.embedded;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.evteev.poll.dto.api.respomce.QuestionDTO;
 import ru.evteev.poll.dto.mapper.QuestionMapper;
 import ru.evteev.poll.entity.Poll;
 import ru.evteev.poll.entity.Question;
+import ru.evteev.poll.exception.FieldValidationException;
 import ru.evteev.poll.exception.NoSuchEntityException;
 import ru.evteev.poll.service.poll_questions.PollService;
 import ru.evteev.poll.service.poll_questions.QuestionService;
@@ -40,6 +45,14 @@ public class PollQuestionsController {
         throwExceptionIfPollEmpty(pollId);
         throwExceptionIfQuestionEmpty(questionId);
         Question question = questionService.getPollQuestion(pollId, questionId);
+        return QuestionMapper.INSTANCE.toDTO(question);
+    }
+
+    @PostMapping("/polls/{pollId}/questions")
+    public QuestionDTO createQuestion(
+            @PathVariable int pollId, @RequestBody Question question) {
+        throwExceptionIfPollEmpty(pollId);
+        questionService.createOrUpdateQuestion(pollId, question);
         return QuestionMapper.INSTANCE.toDTO(question);
     }
 

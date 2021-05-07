@@ -10,6 +10,8 @@ public interface AnswerVariantService {
 
     AnswerVariant getQuestionAnswerVariant(int pollId, int questionId, int id);
 
+    void createOrUpdateAnswerVariant(int questionId, AnswerVariant answerVariant);
+
     List<AnswerVariant> getAllAnswerVariants();
 
     void createOrUpdateAnswerVariant(AnswerVariant answerVariant);
