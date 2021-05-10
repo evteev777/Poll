@@ -8,9 +8,11 @@ public interface AnswerVariantService {
 
     List<AnswerVariant> getAllAnswerVariants();
 
-    void createOrUpdateAnswerVariant(AnswerVariant answerVariant);
-
     AnswerVariant getAnswerVariant(int id);
+
+    void createAnswerVariant(AnswerVariant answerVariant);
+
+    void updateAnswerVariant(AnswerVariant answerVariant);
 
     void deleteAnswerVariant(int id);
 }

@@ -8,7 +8,9 @@ public interface PollService {
 
     List<Poll> getAllPolls();
 
-    Poll createOrUpdatePoll(Poll poll);
+    Poll createPoll(Poll poll);
+
+    Poll updatePoll(Poll poll);
 
     Poll getPoll(int id);
 

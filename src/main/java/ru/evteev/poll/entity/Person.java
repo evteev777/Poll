@@ -1,7 +1,6 @@
 package ru.evteev.poll.entity;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 

@@ -1,4 +1,4 @@
-package ru.evteev.poll.controller.poll_questions.embedded;
+package ru.evteev.poll.controller.poll_questions;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,11 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.evteev.poll.dto.api.respomce.QuestionDTO;
 import ru.evteev.poll.dto.mapper.QuestionMapper;
-import ru.evteev.poll.entity.Poll;
 import ru.evteev.poll.entity.Question;
-import ru.evteev.poll.exception.NoSuchEntityException;
+import ru.evteev.poll.service.poll_questions.PollQuestionsService;
 import ru.evteev.poll.service.poll_questions.PollService;
-import ru.evteev.poll.service.poll_questions.embedded.PollQuestionsService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,8 +23,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/api")
 public class PollQuestionsController {
 
-    private static final String NO_SUCH_POLL = "No such poll with ID=%s in database";
-    private static final String NO_SUCH_QUESTION = "No such question with ID=%s in database";
     private static final String DELETED = "Question with ID=%s is deleted";
 
     private final PollService pollService;
@@ -34,16 +30,14 @@ public class PollQuestionsController {
 
     @GetMapping("/polls/{pollId}/questions")
     public List<QuestionDTO> getPollQuestions(@PathVariable int pollId) {
-        throwExceptionIfPollEmpty(pollId);
         return pollQuestionsService.getPollQuestions(pollId).stream()
                 .map(QuestionMapper.INSTANCE::toDTO)
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/polls/{pollId}/questions/{questionId}")
-    public QuestionDTO getPollQuestion(@PathVariable int pollId, @PathVariable int questionId) {
-        throwExceptionIfPollEmpty(pollId);
-        throwExceptionIfQuestionEmpty(pollId, questionId);
+    public QuestionDTO getPollQuestion(
+            @PathVariable int pollId, @PathVariable int questionId) {
         Question question = pollQuestionsService.getPollQuestion(pollId, questionId);
         return QuestionMapper.INSTANCE.toDTO(question);
     }
@@ -51,42 +45,21 @@ public class PollQuestionsController {
     @PostMapping("/polls/{pollId}/questions")
     public QuestionDTO createQuestion(
             @PathVariable int pollId, @RequestBody Question question) {
-        throwExceptionIfPollEmpty(pollId);
-        pollQuestionsService.createOrUpdateQuestion(pollId, question);
+        pollQuestionsService.createQuestion(pollId, question);
         return QuestionMapper.INSTANCE.toDTO(question);
     }
 
     @PutMapping("/polls/{pollId}/questions")
     public QuestionDTO updateQuestion(
             @PathVariable int pollId, @RequestBody Question question) {
-        throwExceptionIfPollEmpty(pollId);
-        throwExceptionIfQuestionEmpty(pollId, question.getId());
-        pollQuestionsService.createOrUpdateQuestion(pollId, question);
+        pollQuestionsService.updateQuestion(pollId, question);
         return QuestionMapper.INSTANCE.toDTO(question);
     }
 
     @DeleteMapping("/polls/{pollId}/questions/{questionId}")
     public String deleteQuestion(
             @PathVariable int pollId, @PathVariable int questionId) {
-        throwExceptionIfPollEmpty(pollId);
-        throwExceptionIfQuestionEmpty(pollId, questionId);
         pollQuestionsService.deleteQuestion(pollId, questionId);
         return String.format(DELETED, questionId);
-    }
-
-    private void throwExceptionIfPollEmpty(int pollId) {
-        Poll poll = pollService.getPoll(pollId);
-        if (poll == null) {
-            throw new NoSuchEntityException(
-                    String.format(NO_SUCH_POLL, pollId));
-        }
-    }
-
-    private void throwExceptionIfQuestionEmpty(int pollId, int questionId) {
-        Question question = pollQuestionsService.getPollQuestion(pollId, questionId);
-        if (question == null) {
-            throw new NoSuchEntityException(
-                    String.format(NO_SUCH_QUESTION, questionId));
-        }
     }
 }

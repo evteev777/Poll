@@ -1,16 +1,16 @@
-package ru.evteev.poll.service.poll_questions.embedded;
+package ru.evteev.poll.repository.poll_questions;
 
 import ru.evteev.poll.entity.AnswerVariant;
 
 import java.util.List;
 
-public interface QuestionAnswerVariantsService {
+public interface PollQuestionAnswerVariantsRepository {
 
     List<AnswerVariant> getQuestionAnswerVariants(int pollId, int questionId);
 
     AnswerVariant getQuestionAnswerVariant(int pollId, int questionId, int id);
 
-    void createOrUpdateAnswerVariant(int questionId, AnswerVariant answerVariant);
+    void createOrUpdateAnswerVariant(AnswerVariant answerVariant);
 
     void deleteAnswerVariant(int questionId, int id);
 }

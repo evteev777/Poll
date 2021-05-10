@@ -1,4 +1,4 @@
-package ru.evteev.poll.repository.poll_questions.embedded;
+package ru.evteev.poll.repository.poll_questions;
 
 import lombok.AllArgsConstructor;
 import org.hibernate.Session;
@@ -6,14 +6,13 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import ru.evteev.poll.entity.AnswerVariant;
-import ru.evteev.poll.repository.poll_questions.AnswerVariantRepository;
 
 import java.util.List;
 
 @AllArgsConstructor
 @Repository
-public class QuestionAnswerVariantsRepositoryImpl
-        implements QuestionAnswerVariantsRepository {
+public class PollQuestionAnswerVariantsRepositoryImpl
+        implements PollQuestionAnswerVariantsRepository {
 
     private final SessionFactory sessionFactory;
 

@@ -1,4 +1,4 @@
-package ru.evteev.poll.repository.poll_questions.embedded;
+package ru.evteev.poll.repository.poll_questions;
 
 import ru.evteev.poll.entity.Question;
 

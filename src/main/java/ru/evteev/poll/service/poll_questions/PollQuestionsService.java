@@ -1,4 +1,4 @@
-package ru.evteev.poll.service.poll_questions.embedded;
+package ru.evteev.poll.service.poll_questions;
 
 import ru.evteev.poll.entity.Question;
 
@@ -10,7 +10,9 @@ public interface PollQuestionsService {
 
     Question getPollQuestion(int pollId, int questionId);
 
-    void createOrUpdateQuestion(int pollId, Question question);
+    void createQuestion(int pollId, Question question);
+
+    void updateQuestion(int pollId, Question question);
 
     void deleteQuestion(int pollId, int questionId);
 }

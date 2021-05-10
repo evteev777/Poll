@@ -1,7 +1,6 @@
 package ru.evteev.poll.configuration;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

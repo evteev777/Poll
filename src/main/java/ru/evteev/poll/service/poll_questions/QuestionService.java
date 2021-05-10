@@ -8,9 +8,11 @@ public interface QuestionService {
 
     List<Question> getAllQuestions();
 
-    void createOrUpdateQuestion(Question question);
-
     Question getQuestion(int id);
+
+    void createQuestion(Question question);
+
+    void updateQuestion(Question question);
 
     void deleteQuestion(int id);
 }
