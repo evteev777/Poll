@@ -4,11 +4,11 @@ import ru.evteev.poll.entity.Question;
 
 import java.util.List;
 
-public interface PollQuestionsService {
+public interface QuestionsService {
 
-    List<Question> getPollQuestions(int pollId);
+    List<Question> getQuestionList(int pollId);
 
-    Question getPollQuestion(int pollId, int questionId);
+    Question getQuestion(int pollId, int questionId);
 
     void createQuestion(int pollId, Question question);
 

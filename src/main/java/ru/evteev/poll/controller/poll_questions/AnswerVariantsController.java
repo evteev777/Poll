@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.evteev.poll.dto.api.respomce.AnswerVariantDTO;
 import ru.evteev.poll.dto.mapper.AnswerVariantMapper;
 import ru.evteev.poll.entity.AnswerVariant;
-import ru.evteev.poll.service.poll_questions.PollQuestionAnswerVariantsService;
+import ru.evteev.poll.service.poll_questions.AnswerVariantsService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,36 +20,34 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api")
-public class PollQuestionAnswerVariantsController {
+public class AnswerVariantsController {
 
     private static final String DELETED = "Question with ID=%s is deleted";
 
-    private final PollQuestionAnswerVariantsService pollQuestionAnswerVariantsService;
+    private final AnswerVariantsService answerVariantsService;
 
     @GetMapping("/polls/{pollId}/questions/{questionId}/answer_variants")
-    public List<AnswerVariantDTO> getQuestionAnswerVariantList(
+    public List<AnswerVariantDTO> getAnswerVariantList(
             @PathVariable int pollId, @PathVariable int questionId) {
-
-        return pollQuestionAnswerVariantsService
-                .getQuestionAnswerVariantList(pollId, questionId).stream()
+        return answerVariantsService
+                .getAnswerVariantList(pollId, questionId).stream()
                 .map(AnswerVariantMapper.INSTANCE::toDTO)
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/polls/{pollId}/questions/{questionId}/answer_variants/{id}")
-    public AnswerVariantDTO getQuestionAnswerVariant(
+    public AnswerVariantDTO getAnswerVariant(
             @PathVariable int pollId, @PathVariable int questionId, @PathVariable int id) {
         return AnswerVariantMapper.INSTANCE.toDTO(
-                pollQuestionAnswerVariantsService
-                        .getQuestionAnswerVariant(pollId, questionId, id));
+                answerVariantsService.getAnswerVariant(pollId, questionId, id));
     }
 
     @PostMapping("/polls/{pollId}/questions/{questionId}/answer_variants")
-    public AnswerVariantDTO createQuestionAnswerVariant(
+    public AnswerVariantDTO createAnswerVariant(
             @PathVariable int pollId,
             @PathVariable int questionId,
             @RequestBody AnswerVariant answerVariant) {
-        pollQuestionAnswerVariantsService.createAnswerVariant(pollId, questionId, answerVariant);
+        answerVariantsService.createAnswerVariant(pollId, questionId, answerVariant);
         return AnswerVariantMapper.INSTANCE.toDTO(answerVariant);
     }
 
@@ -58,7 +56,7 @@ public class PollQuestionAnswerVariantsController {
             @PathVariable int pollId,
             @PathVariable int questionId,
             @RequestBody AnswerVariant answerVariant) {
-        pollQuestionAnswerVariantsService.updateAnswerVariant(pollId, questionId, answerVariant);
+        answerVariantsService.updateAnswerVariant(pollId, questionId, answerVariant);
         return AnswerVariantMapper.INSTANCE.toDTO(answerVariant);
     }
 
@@ -67,7 +65,7 @@ public class PollQuestionAnswerVariantsController {
             @PathVariable int pollId,
             @PathVariable int questionId,
             @PathVariable int id) {
-        pollQuestionAnswerVariantsService.deleteAnswerVariant(pollId, questionId, id);
+        answerVariantsService.deleteAnswerVariant(pollId, questionId, id);
         return String.format(DELETED, id);
     }
 }

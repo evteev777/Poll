@@ -5,35 +5,35 @@ import org.springframework.stereotype.Service;
 import ru.evteev.poll.entity.Poll;
 import ru.evteev.poll.entity.Question;
 import ru.evteev.poll.exception.NoSuchEntityException;
-import ru.evteev.poll.repository.poll_questions.PollQuestionsRepository;
 import ru.evteev.poll.repository.poll_questions.PollRepository;
+import ru.evteev.poll.repository.poll_questions.QuestionsRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class PollQuestionsServiceImpl implements PollQuestionsService {
+public class QuestionsServiceImpl implements QuestionsService {
 
     private static final String NO_SUCH_POLL = "No such poll with ID=%s in database";
     private static final String NO_SUCH_QUESTION = "No such question with ID=%s in database";
 
     private final PollRepository pollRepository;
-    private final PollQuestionsRepository pollQuestionsRepository;
+    private final QuestionsRepository questionsRepository;
 
     @Override
     @Transactional
-    public List<Question> getPollQuestions(int pollId) {
+    public List<Question> getQuestionList(int pollId) {
         throwExceptionIfPollEmpty(pollId);
-        return pollQuestionsRepository.getPollQuestions(pollId);
+        return questionsRepository.getQuestionList(pollId);
     }
 
     @Override
     @Transactional
-    public Question getPollQuestion(int pollId, int questionId) {
+    public Question getQuestion(int pollId, int questionId) {
         throwExceptionIfPollEmpty(pollId);
         throwExceptionIfQuestionEmpty(pollId, questionId);
-        return pollQuestionsRepository.getPollQuestion(pollId, questionId);
+        return questionsRepository.getQuestion(pollId, questionId);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class PollQuestionsServiceImpl implements PollQuestionsService {
     public void createQuestion(int pollId, Question question) {
         throwExceptionIfPollEmpty(pollId);
         question.setPoll(pollRepository.getPoll(pollId));
-        pollQuestionsRepository.createOrUpdateQuestion(question);
+        questionsRepository.createOrUpdateQuestion(question);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class PollQuestionsServiceImpl implements PollQuestionsService {
         throwExceptionIfPollEmpty(pollId);
         throwExceptionIfQuestionEmpty(pollId, question.getId());
         question.setPoll(pollRepository.getPoll(pollId));
-        pollQuestionsRepository.createOrUpdateQuestion(question);
+        questionsRepository.createOrUpdateQuestion(question);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class PollQuestionsServiceImpl implements PollQuestionsService {
     public void deleteQuestion(int pollId, int questionId) {
         throwExceptionIfPollEmpty(pollId);
         throwExceptionIfQuestionEmpty(pollId, questionId);
-        pollQuestionsRepository.deleteQuestion(pollId, questionId);
+        questionsRepository.deleteQuestion(pollId, questionId);
     }
 
     private void throwExceptionIfPollEmpty(int pollId) {
@@ -70,7 +70,7 @@ public class PollQuestionsServiceImpl implements PollQuestionsService {
     }
 
     private void throwExceptionIfQuestionEmpty(int pollId, int questionId) {
-        Question question = pollQuestionsRepository.getPollQuestion(pollId, questionId);
+        Question question = questionsRepository.getQuestion(pollId, questionId);
         if (question == null) {
             throw new NoSuchEntityException(
                     String.format(NO_SUCH_QUESTION, questionId));

@@ -8,9 +8,9 @@ public interface PollRepository {
 
     List<Poll> getAllPolls();
 
-    void createOrUpdatePoll(Poll poll);
-
     Poll getPoll(int id);
+
+    void createOrUpdatePoll(Poll poll);
 
     void deletePoll(int id);
 }

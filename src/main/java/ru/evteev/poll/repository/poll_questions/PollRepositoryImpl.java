@@ -28,15 +28,15 @@ public class PollRepositoryImpl implements PollRepository {
     }
 
     @Override
-    public void createOrUpdatePoll(Poll poll) {
-        Session session = sessionFactory.getCurrentSession();
-        session.saveOrUpdate(poll);
-    }
-
-    @Override
     public Poll getPoll(int id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(Poll.class, id);
+    }
+
+    @Override
+    public void createOrUpdatePoll(Poll poll) {
+        Session session = sessionFactory.getCurrentSession();
+        session.saveOrUpdate(poll);
     }
 
     @Override
