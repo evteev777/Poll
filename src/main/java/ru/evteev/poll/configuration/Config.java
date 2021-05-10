@@ -2,6 +2,9 @@ package ru.evteev.poll.configuration;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.flywaydb.core.Flyway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,10 +17,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import ru.evteev.poll.exception.CustomAccessDeniedHandler;
 
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
@@ -28,7 +29,9 @@ import java.util.Properties;
 @PropertySource("classpath:application.properties")
 @EnableWebMvc
 @EnableTransactionManagement
-@Data
+@RequiredArgsConstructor
+@Getter
+@Setter
 public class Config {
 
     private final Environment env;
@@ -102,11 +105,6 @@ public class Config {
     @Bean
     public PersistenceExceptionTranslationPostProcessor exceptionTranslator() {
         return new PersistenceExceptionTranslationPostProcessor();
-    }
-
-    @Bean
-    public AccessDeniedHandler accessDeniedHandler() {
-        return new CustomAccessDeniedHandler();
     }
 
     @Bean

@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.access.AccessDeniedHandler;
 
 import javax.sql.DataSource;
 
@@ -23,7 +22,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String ROLE_PERSON = "PERSON";
 
     private final DataSource dataSource;
-    private final AccessDeniedHandler accessDeniedHandler;
     private final Environment env;
     private final Logger logger;
 
@@ -41,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         if (securityEnabled) {
             http.authorizeRequests()
                     .antMatchers("/").permitAll()
-                    .antMatchers("/api/polls/**").hasAnyRole(ROLE_PERSON, ROLE_ADMIN)
+                    .antMatchers("/api/polls/**", "/api/answers/**").hasAnyRole(ROLE_PERSON, ROLE_ADMIN)
                     .antMatchers("/**").hasRole(ROLE_ADMIN)
                     .and().formLogin()
                         .defaultSuccessUrl("/api/persons", true).permitAll()
@@ -50,8 +48,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
-                    .and().exceptionHandling()
-                        .accessDeniedHandler(accessDeniedHandler)
                     .and().csrf()
             ;
         } else {
