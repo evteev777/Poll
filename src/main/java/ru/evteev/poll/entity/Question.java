@@ -2,8 +2,10 @@ package ru.evteev.poll.entity;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import ru.evteev.poll.enums.QuestionType;
 
 import javax.persistence.CascadeType;
@@ -20,10 +22,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.List;
 
-@Data
 @Entity
-@NoArgsConstructor
 @Table(name = "questions")
+@RequiredArgsConstructor
+@Getter
+@Setter
 public class Question {
 
     @Id

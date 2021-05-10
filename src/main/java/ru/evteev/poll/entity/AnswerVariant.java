@@ -1,8 +1,10 @@
 package ru.evteev.poll.entity;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,10 +19,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.List;
 
-@Data
-@NoArgsConstructor
 @Entity
 @Table(name = "answer_variants")
+@RequiredArgsConstructor
+@Getter
+@Setter
 public class AnswerVariant {
 
     @Id

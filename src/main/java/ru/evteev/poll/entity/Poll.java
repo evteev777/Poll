@@ -8,8 +8,10 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,10 +24,11 @@ import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.List;
 
-@Data
-@NoArgsConstructor
 @Entity
 @Table(name = "polls")
+@RequiredArgsConstructor
+@Getter
+@Setter
 public class Poll {
 
     @Id

@@ -1,22 +1,20 @@
 package ru.evteev.poll.entity;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import java.util.List;
 
-@Data
-@NoArgsConstructor
 @Entity
 @Table(name = "users")
+@RequiredArgsConstructor
+@Getter
+@Setter
 public class User {
 
     @Id
@@ -28,10 +26,4 @@ public class User {
 
     @Column(name = "enabled", nullable = false, columnDefinition = "BIT", length = 1)
     boolean enabled;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "users_authorities",
-            joinColumns = @JoinColumn(name = "user_username"),
-            inverseJoinColumns = @JoinColumn(name = "authority_username"))
-    List<Role> authorityList;
 }
